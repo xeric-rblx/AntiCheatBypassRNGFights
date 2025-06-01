@@ -1,12 +1,18 @@
-local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui", 5)
+
+if not PlayerGui then
+    warn("PlayerGui not found!")
+    return
+end
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AntiCheatWarningGui"
 screenGui.Parent = PlayerGui
 screenGui.ResetOnSpawn = false
+screenGui.Enabled = true
 
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 150)
@@ -48,7 +54,7 @@ noButton.Parent = frame
 yesButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/xeric-rblx/AntiCheatBypassRNGFights/refs/heads/main/AntiCheatBypassRNGFights.lua"))()
+        return loadstring(HttpService:GetAsync("https://raw.githubusercontent.com/xeric-rblx/AntiCheatBypassRNGFights/refs/heads/main/AntiCheatBypassRNGFights.lua"))()
     end)
     if not success then
         warn("Failed to execute script: " .. tostring(result))
