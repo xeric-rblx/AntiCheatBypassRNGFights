@@ -2,7 +2,7 @@ local StarterGui = game:GetService("StarterGui")
 
 StarterGui:SetCore("SendNotification", {
     Title = "Hello!",
-    Text = "This script is to bypass the anti-cheat of RNG Fights, the anti-cheat is being removed.",
+    Text = "This script is to bypass the anti-cheat of RNG Fights, the anti-cheat is currently being removed.",
     Duration = 3600,
     Button1 = "OK",
     Callback = function()
@@ -10,8 +10,35 @@ StarterGui:SetCore("SendNotification", {
     end
 })
 
+local StarterGui = game:GetService("StarterGui")
+
+StarterGui:SetCore("SendNotification", {
+    Title = "Credits",
+    Text = "made by fluflu",
+    Duration = 3600,
+    Button1 = "idgaf",
+    Callback = function()
+        print("Notification closed")
+    end
+})
+
 print("|| Xeric Hub || working on it...")
-a=function(b)b=string.lower(b)return string.find(b,"anti")or string.find(b,"cheat")or string.find(b,"meter")end
-c=function(d)for _,e in ipairs(d:GetDescendants())do if e:IsA("Instance")and e.Name and a(e.Name)then pcall(function()e:Destroy()end)end end end
-c(game)
+
+local function hasAntiCheatKeywords(name)
+    local lowered = string.lower(name)
+    return string.find(lowered, "anti") or string.find(lowered, "cheat") or string.find(lowered, "meter")
+end
+
+local function removeAntiCheatComponents(root)
+    for _, descendant in ipairs(root:GetDescendants()) do
+        if descendant:IsA("Instance") and descendant.Name and hasAntiCheatKeywords(descendant.Name) then
+            pcall(function()
+                descendant:Destroy()
+            end)
+        end
+    end
+end
+
+removeAntiCheatComponents(game)
+
 print("|| Xeric Hub || removed anti-cheat, if you get banned, please report it here: discord.gg/MvH8e4rsNf")
